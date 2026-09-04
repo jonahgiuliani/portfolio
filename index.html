@@ -1,282 +1,258 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Jonah Giuliani — Builder</title>
-  <meta name="description" content="Jonah Giuliani — UC Berkeley. Building Point 99: fund operations software." />
-  <meta property="og:title" content="Jonah Giuliani" />
-  <meta property="og:description" content="Building Point 99 — fund operations software. UC Berkeley." />
-  <meta property="og:type" content="website" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --ink: #1a1814;
-      --muted: #6b6458;
-      --rule: #d9d0c0;
-      --paper: #f6f1e6;
-      --paper-2: #efe7d6;
-      --accent: #003262;
-      --gold: #c4a35a;
-      --ok: #2f5d3a;
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      color: var(--ink);
-      background:
-        radial-gradient(1200px 600px at 10% -10%, #fff8e8 0%, transparent 55%),
-        radial-gradient(900px 500px at 100% 0%, #e8eef5 0%, transparent 45%),
-        var(--paper);
-      font-family: "Newsreader", Georgia, serif;
-      line-height: 1.5;
-    }
-    .sheet {
-      width: min(720px, calc(100% - 2rem));
-      margin: 2.5rem auto 3.5rem;
-      background: linear-gradient(180deg, #fffdf8 0%, var(--paper) 100%);
-      border: 1px solid var(--rule);
-      box-shadow:
-        0 1px 0 rgba(255,255,255,0.7) inset,
-        0 18px 50px rgba(26,24,20,0.08);
-      padding: 2.25rem 2rem 2rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .sheet::before {
-      content: "";
-      position: absolute;
-      inset: 12px;
-      border: 1px solid rgba(196,163,90,0.35);
-      pointer-events: none;
-    }
-    .wm {
-      position: absolute;
-      right: -1rem;
-      top: 4.5rem;
-      font-family: "IBM Plex Mono", ui-monospace, monospace;
-      font-size: clamp(5rem, 18vw, 8rem);
-      font-weight: 500;
-      letter-spacing: -0.06em;
-      color: rgba(0,50,98,0.05);
-      transform: rotate(-12deg);
-      user-select: none;
-      pointer-events: none;
-    }
-    header {
-      position: relative;
-      z-index: 1;
-      border-bottom: 1px solid var(--rule);
-      padding-bottom: 1.35rem;
-      margin-bottom: 1.5rem;
-    }
-    .eyebrow {
-      font-family: "IBM Plex Mono", ui-monospace, monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin: 0 0 0.85rem;
-    }
-    h1 {
-      margin: 0;
-      font-size: clamp(2.1rem, 6vw, 2.85rem);
-      font-weight: 600;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-    }
-    .role {
-      margin: 0.55rem 0 0;
-      font-size: 1.15rem;
-      color: var(--muted);
-      font-style: italic;
-    }
-    .meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.55rem 1.1rem;
-      margin-top: 1.1rem;
-      font-family: "IBM Plex Mono", ui-monospace, monospace;
-      font-size: 0.78rem;
-    }
-    .meta a {
-      color: var(--accent);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(0,50,98,0.25);
-    }
-    .meta a:hover { border-bottom-color: var(--accent); }
-    .pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      color: var(--ok);
-    }
-    .pill::before {
-      content: "";
-      width: 0.45rem;
-      height: 0.45rem;
-      border-radius: 50%;
-      background: var(--ok);
-      box-shadow: 0 0 0 3px rgba(47,93,58,0.15);
-    }
-    section {
-      position: relative;
-      z-index: 1;
-      margin: 0 0 1.6rem;
-    }
-    h2 {
-      margin: 0 0 0.7rem;
-      font-family: "IBM Plex Mono", ui-monospace, monospace;
-      font-size: 0.72rem;
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
-    }
-    .lede {
-      margin: 0;
-      font-size: 1.18rem;
-      max-width: 38ch;
-    }
-    .lede strong { font-weight: 600; color: var(--accent); }
-    .card {
-      margin-top: 1rem;
-      padding: 1.1rem 1.05rem 1.05rem;
-      background: var(--paper-2);
-      border: 1px solid var(--rule);
-    }
-    .card h3 {
-      margin: 0 0 0.35rem;
-      font-size: 1.25rem;
-      font-weight: 600;
-    }
-    .card p {
-      margin: 0;
-      color: var(--ink);
-      font-size: 1.02rem;
-    }
-    .card .linkrow {
-      margin-top: 0.85rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.75rem 1rem;
-      font-family: "IBM Plex Mono", ui-monospace, monospace;
-      font-size: 0.78rem;
-    }
-    .card a {
-      color: var(--accent);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(0,50,98,0.25);
-    }
-    .card a:hover { border-bottom-color: var(--accent); }
-    ul.ships {
-      list-style: none;
-      margin: 0.85rem 0 0;
-      padding: 0;
-      border-top: 1px dashed var(--rule);
-    }
-    ul.ships li {
-      display: grid;
-      grid-template-columns: 7.5rem 1fr;
-      gap: 0.75rem;
-      padding: 0.7rem 0;
-      border-bottom: 1px dashed var(--rule);
-      font-size: 0.98rem;
-    }
-    ul.ships .k {
-      font-family: "IBM Plex Mono", ui-monospace, monospace;
-      font-size: 0.72rem;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      color: var(--gold);
-      padding-top: 0.2rem;
-    }
-    .note {
-      margin: 0;
-      font-size: 0.95rem;
-      color: var(--muted);
-      font-style: italic;
-    }
-    footer {
-      position: relative;
-      z-index: 1;
-      margin-top: 1.75rem;
-      padding-top: 1rem;
-      border-top: 1px solid var(--rule);
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 0.5rem 1rem;
-      font-family: "IBM Plex Mono", ui-monospace, monospace;
-      font-size: 0.72rem;
-      color: var(--muted);
-      letter-spacing: 0.04em;
-    }
-    @media (max-width: 560px) {
-      .sheet { margin: 1rem auto 2rem; padding: 1.5rem 1.15rem 1.25rem; }
-      ul.ships li { grid-template-columns: 1fr; gap: 0.2rem; }
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Jonah Giuliani</title>
+<meta name="description" content="Stacked post-money SAFE ownership — a tool for the dilution founders miss." />
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font: 14px/1.45 ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    background: #0b0b0b;
+    color: #d8d8d8;
+  }
+  a { color: #7ec8ff; }
+  main { max-width: 820px; margin: 0 auto; padding: 28px 18px 64px; }
+  h1 { font-size: 18px; font-weight: 600; margin: 0 0 6px; color: #fff; }
+  .sub { color: #8a8a8a; margin: 0 0 22px; }
+  h2 { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8a8a8a; margin: 28px 0 10px; font-weight: 600; }
+  p { margin: 0 0 12px; max-width: 62ch; }
+  .problem { border-left: 2px solid #ff6b4a; padding: 2px 0 2px 12px; margin: 0 0 18px; color: #ececec; }
+  .tool {
+    border: 1px solid #2a2a2a;
+    background: #111;
+    padding: 14px;
+  }
+  .row { display: grid; grid-template-columns: 1.2fr 1fr 1fr auto; gap: 8px; margin-bottom: 8px; align-items: end; }
+  label { display: block; font-size: 11px; color: #8a8a8a; margin-bottom: 4px; }
+  input, button, select {
+    font: inherit;
+    background: #0b0b0b;
+    color: #fff;
+    border: 1px solid #333;
+    padding: 8px 9px;
+    width: 100%;
+  }
+  button {
+    cursor: pointer;
+    background: #1a1a1a;
+    white-space: nowrap;
+  }
+  button:hover { border-color: #666; }
+  button.primary { background: #fff; color: #000; border-color: #fff; font-weight: 600; }
+  table { width: 100%; border-collapse: collapse; margin-top: 14px; font-size: 13px; }
+  th, td { text-align: left; padding: 7px 6px; border-bottom: 1px solid #222; }
+  th { color: #8a8a8a; font-weight: 500; }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  .warn { color: #ff6b4a; }
+  .ok { color: #7dffb3; }
+  .muted { color: #8a8a8a; }
+  .out {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid #2a2a2a;
+  }
+  .big { font-size: 22px; color: #fff; margin: 4px 0 2px; }
+  .foot { margin-top: 28px; color: #666; font-size: 12px; }
+  .foot a { color: #8a8a8a; }
+  @media (max-width: 640px) {
+    .row { grid-template-columns: 1fr 1fr; }
+    .row .span2 { grid-column: 1 / -1; }
+  }
+</style>
 </head>
 <body>
-  <main class="sheet">
-    <div class="wm" aria-hidden="true">99</div>
-    <header>
-      <p class="eyebrow">Portfolio · Entrepreneurs @ Berkeley</p>
-      <h1>Jonah Giuliani</h1>
-      <p class="role">UC Berkeley · building fund operations software</p>
-      <div class="meta">
-        <span class="pill">Shipping product</span>
-        <a href="https://99point.co" target="_blank" rel="noopener">99point.co</a>
-        <a href="mailto:jonah_giuliani@berkeley.edu">jonah_giuliani@berkeley.edu</a>
-      </div>
-    </header>
+<main>
+  <h1>Jonah Giuliani</h1>
+  <p class="sub">Berkeley · <a href="mailto:jonah_giuliani@berkeley.edu">jonah_giuliani@berkeley.edu</a></p>
 
-    <section>
-      <h2>What I’m building</h2>
-      <p class="lede">
-        I work on <strong>Point 99</strong> — software that automates fund accounting and reporting so operators stop living in spreadsheets.
-      </p>
-      <div class="card">
-        <h3>Point 99</h3>
-        <p>
-          Real fund ops: general ledger, partner capital, statement packages, and PDF exports that look like the books — not a demo todo app.
-        </p>
-        <ul class="ships">
-          <li>
-            <span class="k">Ledger</span>
-            <span>Rebuilt as a classic paper-style general journal (debit / credit, partner &amp; counterparty grouping, collapsible events).</span>
-          </li>
-          <li>
-            <span class="k">Next Report</span>
-            <span>Full-page statement packages (SOF / SOI / BS / partner capital) with a watermarked Point 99 PDF download.</span>
-          </li>
-          <li>
-            <span class="k">Ship loop</span>
-            <span>Feature-flagged canaries, review cycles with eng + product, and tight iteration from live feedback.</span>
-          </li>
-        </ul>
-        <div class="linkrow">
-          <a href="https://99point.co" target="_blank" rel="noopener">Product → 99point.co</a>
+  <h2>Problem</h2>
+  <p class="problem">
+    Post-money SAFEs look simple (“invest / cap = ownership”), but a stack of them does not dilute the way founders usually sketch in a spreadsheet. Later SAFEs dilute founders only — not earlier SAFE holders — so ownership math compounds against common. Most napkin models get this wrong.
+  </p>
+
+  <h2>What I built</h2>
+  <p>
+    A small calculator that models a stack of YC-style post-money SAFEs (valuation cap), shows each investor’s locked ownership, founder residual before a priced round, and flags when you’ve sold past a threshold. Formulas are visible. No accounts, no fluff.
+  </p>
+
+  <div class="tool" id="tool">
+    <div id="safes"></div>
+    <div class="row" style="margin-top:10px">
+      <div class="span2">
+        <label>Founder warning threshold</label>
+        <select id="threshold">
+          <option value="0.20">warn if SAFEs ≥ 20%</option>
+          <option value="0.25" selected>warn if SAFEs ≥ 25%</option>
+          <option value="0.30">warn if SAFEs ≥ 30%</option>
+          <option value="0.40">warn if SAFEs ≥ 40%</option>
+        </select>
+      </div>
+      <div>
+        <label>&nbsp;</label>
+        <button type="button" id="add">+ SAFE</button>
+      </div>
+      <div>
+        <label>&nbsp;</label>
+        <button type="button" class="primary" id="recalc">Recalculate</button>
+      </div>
+    </div>
+
+    <div class="out" id="out"></div>
+  </div>
+
+  <h2>Why this</h2>
+  <p>
+    E@B is full of people who will raise. The unglamorous skill is knowing exactly what you sold before you sign. I wanted a tool that makes the dilution legible in under a minute.
+  </p>
+
+  <p class="foot">
+    Source: this page · not legal advice · YC post-money SAFE ownership ≈ investment ÷ post-money cap; stacked SAFEs don’t dilute each other
+  </p>
+</main>
+<script>
+(function () {
+  const money = (n) => n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+  const pct = (x) => (100 * x).toFixed(2) + "%";
+
+  let safes = [
+    { name: "Angel A", invest: 250000, cap: 5000000 },
+    { name: "Angel B", invest: 500000, cap: 8000000 },
+    { name: "Pre-seed", invest: 750000, cap: 12000000 },
+  ];
+
+  const safesEl = document.getElementById("safes");
+  const outEl = document.getElementById("out");
+
+  function renderInputs() {
+    safesEl.innerHTML = safes.map((s, i) => `
+      <div class="row" data-i="${i}">
+        <div class="span2">
+          <label>SAFE ${i + 1} label</label>
+          <input data-k="name" value="${s.name.replace(/"/g, "&quot;")}" />
+        </div>
+        <div>
+          <label>Investment ($)</label>
+          <input data-k="invest" type="number" min="0" step="1000" value="${s.invest}" />
+        </div>
+        <div>
+          <label>Post-money cap ($)</label>
+          <input data-k="cap" type="number" min="1" step="1000" value="${s.cap}" />
+        </div>
+        <div>
+          <label>&nbsp;</label>
+          <button type="button" data-del="${i}">Remove</button>
         </div>
       </div>
-    </section>
+    `).join("");
+  }
 
-    <section>
-      <h2>Why this</h2>
-      <p class="note">
-        I like hard, unglamorous product work — the kind where correctness, UX, and trust actually matter. Point 99 is that: shipping interfaces operators will use on real money.
+  function readInputs() {
+    const rows = [...safesEl.querySelectorAll(".row")];
+    safes = rows.map((row) => {
+      const get = (k) => row.querySelector(`[data-k="${k}"]`).value;
+      return {
+        name: get("name") || "SAFE",
+        invest: Math.max(0, Number(get("invest")) || 0),
+        cap: Math.max(1, Number(get("cap")) || 1),
+      };
+    });
+  }
+
+  function calc() {
+    readInputs();
+    const rows = safes.map((s) => {
+      const own = s.invest / s.cap;
+      return { ...s, own };
+    });
+    const totalSafe = rows.reduce((a, r) => a + r.own, 0);
+    const founders = Math.max(0, 1 - totalSafe);
+    const threshold = Number(document.getElementById("threshold").value);
+    const over = totalSafe >= threshold;
+
+    // Wrong napkin model people often use: treat later SAFEs as diluting everyone including prior SAFEs
+    let wrongFounders = 1;
+    rows.forEach((r) => { wrongFounders *= (1 - r.own); });
+    const wrongResidual = wrongFounders;
+    const delta = wrongResidual - founders;
+
+    outEl.innerHTML = `
+      <div>Founder / common residual <span class="muted">(before priced round)</span></div>
+      <div class="big ${over ? "warn" : "ok"}">${pct(founders)}</div>
+      <div class="${over ? "warn" : "muted"}">
+        SAFE stack owns ${pct(totalSafe)}${over ? " — past your warning threshold" : ""}.
+      </div>
+      <table>
+        <thead>
+          <tr>
+            <th>SAFE</th>
+            <th class="num">Invest</th>
+            <th class="num">Cap</th>
+            <th class="num">Locked %</th>
+            <th class="num">Formula</th>
+          </tr>
+        </thead>
+        <tbody>
+          ${rows.map((r) => `
+            <tr>
+              <td>${r.name}</td>
+              <td class="num">${money(r.invest)}</td>
+              <td class="num">${money(r.cap)}</td>
+              <td class="num">${pct(r.own)}</td>
+              <td class="num muted">${money(r.invest)} ÷ ${money(r.cap)}</td>
+            </tr>
+          `).join("")}
+          <tr>
+            <td><strong>Total SAFEs</strong></td>
+            <td class="num"></td>
+            <td class="num"></td>
+            <td class="num"><strong>${pct(totalSafe)}</strong></td>
+            <td class="num muted">sum (no mutual dilution)</td>
+          </tr>
+          <tr>
+            <td>Founders / common</td>
+            <td class="num"></td>
+            <td class="num"></td>
+            <td class="num">${pct(founders)}</td>
+            <td class="num muted">1 − sum</td>
+          </tr>
+        </tbody>
+      </table>
+      <p style="margin-top:14px" class="muted">
+        Napkin mistake: multiplying (1 − each SAFE %) as if SAFEs dilute each other leaves founders at
+        <span class="ok">${pct(wrongResidual)}</span> — too optimistic by <span class="warn">${pct(Math.max(0, delta))}</span>
+        versus the real post-money stack.
       </p>
-    </section>
+    `;
+  }
 
-    <footer>
-      <span>Jonah Giuliani · Berkeley</span>
-      <span>Built for E@B · 2026</span>
-    </footer>
-  </main>
+  safesEl.addEventListener("click", (e) => {
+    const btn = e.target.closest("[data-del]");
+    if (!btn) return;
+    readInputs();
+    const i = Number(btn.getAttribute("data-del"));
+    safes.splice(i, 1);
+    if (!safes.length) safes.push({ name: "SAFE 1", invest: 100000, cap: 4000000 });
+    renderInputs();
+    calc();
+  });
+  document.getElementById("add").onclick = () => {
+    readInputs();
+    safes.push({ name: `SAFE ${safes.length + 1}`, invest: 250000, cap: 10000000 });
+    renderInputs();
+    calc();
+  };
+  document.getElementById("recalc").onclick = calc;
+  document.getElementById("threshold").onchange = calc;
+  safesEl.addEventListener("change", calc);
+  safesEl.addEventListener("input", () => { /* live-ish */ });
+
+  renderInputs();
+  calc();
+})();
+</script>
 </body>
 </html>
