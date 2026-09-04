@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Jonah Giuliani</title>
-<meta name="description" content="Stacked post-money SAFE ownership — a tool for the dilution founders miss." />
+<title>how much did I sell?</title>
+<meta name="description" content="A tiny toy for stacked post-money SAFE ownership — watch founder equity disappear the honest way." />
 <style>
   :root { color-scheme: dark; }
   * { box-sizing: border-box; }
@@ -16,11 +16,11 @@
   }
   a { color: #7ec8ff; }
   main { max-width: 820px; margin: 0 auto; padding: 28px 18px 64px; }
-  h1 { font-size: 18px; font-weight: 600; margin: 0 0 6px; color: #fff; }
+  h1 { font-size: 22px; font-weight: 600; margin: 0 0 6px; color: #fff; }
   .sub { color: #8a8a8a; margin: 0 0 22px; }
   h2 { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: #8a8a8a; margin: 28px 0 10px; font-weight: 600; }
   p { margin: 0 0 12px; max-width: 62ch; }
-  .problem { border-left: 2px solid #ff6b4a; padding: 2px 0 2px 12px; margin: 0 0 18px; color: #ececec; }
+  .problem { border-left: 2px solid #ffb84a; padding: 2px 0 2px 12px; margin: 0 0 18px; color: #ececec; }
   .tool {
     border: 1px solid #2a2a2a;
     background: #111;
@@ -55,9 +55,23 @@
     padding-top: 12px;
     border-top: 1px solid #2a2a2a;
   }
-  .big { font-size: 22px; color: #fff; margin: 4px 0 2px; }
+  .big { font-size: 28px; color: #fff; margin: 4px 0 2px; letter-spacing: -0.02em; }
+  .bar {
+    margin: 12px 0 4px;
+    height: 18px;
+    background: #1a1a1a;
+    border: 1px solid #2a2a2a;
+    display: flex;
+    overflow: hidden;
+  }
+  .bar > span { display: block; height: 100%; }
+  .bar .safe { background: #ff6b4a; }
+  .bar .you { background: #7dffb3; }
+  .legend { display: flex; gap: 14px; font-size: 11px; color: #8a8a8a; margin-bottom: 8px; }
+  .legend i { display: inline-block; width: 10px; height: 10px; margin-right: 5px; vertical-align: -1px; }
   .foot { margin-top: 28px; color: #666; font-size: 12px; }
-  .foot a { color: #8a8a8a; }
+  .presets { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 12px; }
+  .presets button { width: auto; }
   @media (max-width: 640px) {
     .row { grid-template-columns: 1fr 1fr; }
     .row .span2 { grid-column: 1 / -1; }
@@ -66,29 +80,29 @@
 </head>
 <body>
 <main>
-  <h1>Jonah Giuliani</h1>
-  <p class="sub">Berkeley · <a href="mailto:jonah_giuliani@berkeley.edu">jonah_giuliani@berkeley.edu</a></p>
+  <h1>how much did I sell?</h1>
+  <p class="sub">a tiny SAFE-stack toy · by <a href="mailto:jonah_giuliani@berkeley.edu">Jonah Giuliani</a></p>
 
-  <h2>Problem</h2>
+  <h2>the bit that bites</h2>
   <p class="problem">
-    Post-money SAFEs look simple (“invest / cap = ownership”), but a stack of them does not dilute the way founders usually sketch in a spreadsheet. Later SAFEs dilute founders only — not earlier SAFE holders — so ownership math compounds against common. Most napkin models get this wrong.
-  </p>
-
-  <h2>What I built</h2>
-  <p>
-    A small calculator that models a stack of YC-style post-money SAFEs (valuation cap), shows each investor’s locked ownership, founder residual before a priced round, and flags when you’ve sold past a threshold. Formulas are visible. No accounts, no fluff.
+    Post-money SAFEs feel friendly: invest ÷ cap = ownership. Stack a few though, and later ones dilute <em>you</em>, not the earlier SAFEs. Spreadsheet napkin math usually pretends they dilute each other. They don’t. This toy makes the gap obvious — and a little painful.
   </p>
 
   <div class="tool" id="tool">
+    <div class="presets">
+      <button type="button" data-preset="chill">chill angels</button>
+      <button type="button" data-preset="spicy">spicy pre-seed</button>
+      <button type="button" data-preset="oops">oops I said yes a lot</button>
+    </div>
     <div id="safes"></div>
     <div class="row" style="margin-top:10px">
       <div class="span2">
-        <label>Founder warning threshold</label>
+        <label>panic threshold</label>
         <select id="threshold">
-          <option value="0.20">warn if SAFEs ≥ 20%</option>
-          <option value="0.25" selected>warn if SAFEs ≥ 25%</option>
-          <option value="0.30">warn if SAFEs ≥ 30%</option>
-          <option value="0.40">warn if SAFEs ≥ 40%</option>
+          <option value="0.20">yellow if SAFEs ≥ 20%</option>
+          <option value="0.25" selected>yellow if SAFEs ≥ 25%</option>
+          <option value="0.30">yellow if SAFEs ≥ 30%</option>
+          <option value="0.40">yellow if SAFEs ≥ 40%</option>
         </select>
       </div>
       <div>
@@ -97,20 +111,20 @@
       </div>
       <div>
         <label>&nbsp;</label>
-        <button type="button" class="primary" id="recalc">Recalculate</button>
+        <button type="button" class="primary" id="recalc">run it</button>
       </div>
     </div>
 
     <div class="out" id="out"></div>
   </div>
 
-  <h2>Why this</h2>
+  <h2>what this is</h2>
   <p>
-    E@B is full of people who will raise. The unglamorous skill is knowing exactly what you sold before you sign. I wanted a tool that makes the dilution legible in under a minute.
+    A weekend experiment in making founder dilution legible. Punch in a stack of YC-style post-money SAFEs, see locked investor %, what’s left for common, and how optimistic the wrong napkin model was. Not legal advice — just the math, with feelings.
   </p>
 
   <p class="foot">
-    Source: this page · not legal advice · YC post-money SAFE ownership ≈ investment ÷ post-money cap; stacked SAFEs don’t dilute each other
+    ownership ≈ investment ÷ post-money cap · stacked SAFEs don’t dilute each other · not legal advice
   </p>
 </main>
 <script>
@@ -118,11 +132,25 @@
   const money = (n) => n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
   const pct = (x) => (100 * x).toFixed(2) + "%";
 
-  let safes = [
-    { name: "Angel A", invest: 250000, cap: 5000000 },
-    { name: "Angel B", invest: 500000, cap: 8000000 },
-    { name: "Pre-seed", invest: 750000, cap: 12000000 },
-  ];
+  const PRESETS = {
+    chill: [
+      { name: "friend round", invest: 100000, cap: 6000000 },
+      { name: "angel", invest: 250000, cap: 10000000 },
+    ],
+    spicy: [
+      { name: "Angel A", invest: 250000, cap: 5000000 },
+      { name: "Angel B", invest: 500000, cap: 8000000 },
+      { name: "pre-seed", invest: 750000, cap: 12000000 },
+    ],
+    oops: [
+      { name: "coffee chat check", invest: 150000, cap: 4000000 },
+      { name: "that one demo day", invest: 400000, cap: 6000000 },
+      { name: "rolling close #3", invest: 600000, cap: 9000000 },
+      { name: "one more won't hurt", invest: 800000, cap: 12000000 },
+    ],
+  };
+
+  let safes = PRESETS.spicy.map((s) => ({ ...s }));
 
   const safesEl = document.getElementById("safes");
   const outEl = document.getElementById("out");
@@ -131,20 +159,20 @@
     safesEl.innerHTML = safes.map((s, i) => `
       <div class="row" data-i="${i}">
         <div class="span2">
-          <label>SAFE ${i + 1} label</label>
+          <label>SAFE ${i + 1}</label>
           <input data-k="name" value="${s.name.replace(/"/g, "&quot;")}" />
         </div>
         <div>
-          <label>Investment ($)</label>
+          <label>investment ($)</label>
           <input data-k="invest" type="number" min="0" step="1000" value="${s.invest}" />
         </div>
         <div>
-          <label>Post-money cap ($)</label>
+          <label>post-money cap ($)</label>
           <input data-k="cap" type="number" min="1" step="1000" value="${s.cap}" />
         </div>
         <div>
           <label>&nbsp;</label>
-          <button type="button" data-del="${i}">Remove</button>
+          <button type="button" data-del="${i}">yeet</button>
         </div>
       </div>
     `).join("");
@@ -162,37 +190,47 @@
     });
   }
 
+  function vibe(founders, over) {
+    if (founders < 0.55) return over ? "you sold a lot of the company before the priced round. oof." : "thin common. spicy.";
+    if (founders < 0.7) return "still founder-majority, but the stack is chewing.";
+    if (founders < 0.85) return "reasonable. the napkin might still lie to you though.";
+    return "chill stack. enjoy it while it lasts.";
+  }
+
   function calc() {
     readInputs();
-    const rows = safes.map((s) => {
-      const own = s.invest / s.cap;
-      return { ...s, own };
-    });
+    const rows = safes.map((s) => ({ ...s, own: s.invest / s.cap }));
     const totalSafe = rows.reduce((a, r) => a + r.own, 0);
     const founders = Math.max(0, 1 - totalSafe);
     const threshold = Number(document.getElementById("threshold").value);
     const over = totalSafe >= threshold;
 
-    // Wrong napkin model people often use: treat later SAFEs as diluting everyone including prior SAFEs
     let wrongFounders = 1;
     rows.forEach((r) => { wrongFounders *= (1 - r.own); });
-    const wrongResidual = wrongFounders;
-    const delta = wrongResidual - founders;
+    const delta = Math.max(0, wrongFounders - founders);
+    const safeW = Math.min(100, totalSafe * 100);
+    const youW = Math.max(0, 100 - safeW);
 
     outEl.innerHTML = `
-      <div>Founder / common residual <span class="muted">(before priced round)</span></div>
+      <div>what's left for you <span class="muted">(common, before a priced round)</span></div>
       <div class="big ${over ? "warn" : "ok"}">${pct(founders)}</div>
-      <div class="${over ? "warn" : "muted"}">
-        SAFE stack owns ${pct(totalSafe)}${over ? " — past your warning threshold" : ""}.
+      <div class="${over ? "warn" : "muted"}">${vibe(founders, over)}</div>
+      <div class="legend" style="margin-top:12px">
+        <span><i style="background:#ff6b4a"></i>SAFEs ${pct(totalSafe)}</span>
+        <span><i style="background:#7dffb3"></i>you ${pct(founders)}</span>
+      </div>
+      <div class="bar" aria-hidden="true">
+        <span class="safe" style="width:${safeW}%"></span>
+        <span class="you" style="width:${youW}%"></span>
       </div>
       <table>
         <thead>
           <tr>
             <th>SAFE</th>
-            <th class="num">Invest</th>
-            <th class="num">Cap</th>
-            <th class="num">Locked %</th>
-            <th class="num">Formula</th>
+            <th class="num">invest</th>
+            <th class="num">cap</th>
+            <th class="num">locked</th>
+            <th class="num">math</th>
           </tr>
         </thead>
         <tbody>
@@ -206,25 +244,19 @@
             </tr>
           `).join("")}
           <tr>
-            <td><strong>Total SAFEs</strong></td>
+            <td><strong>all SAFEs</strong></td>
             <td class="num"></td>
             <td class="num"></td>
             <td class="num"><strong>${pct(totalSafe)}</strong></td>
-            <td class="num muted">sum (no mutual dilution)</td>
-          </tr>
-          <tr>
-            <td>Founders / common</td>
-            <td class="num"></td>
-            <td class="num"></td>
-            <td class="num">${pct(founders)}</td>
-            <td class="num muted">1 − sum</td>
+            <td class="num muted">sum · no mutual dilution</td>
           </tr>
         </tbody>
       </table>
       <p style="margin-top:14px" class="muted">
-        Napkin mistake: multiplying (1 − each SAFE %) as if SAFEs dilute each other leaves founders at
-        <span class="ok">${pct(wrongResidual)}</span> — too optimistic by <span class="warn">${pct(Math.max(0, delta))}</span>
-        versus the real post-money stack.
+        wrong napkin (multiply 1 − each % as if SAFEs dilute each other): you’d think you still own
+        <span class="ok">${pct(wrongFounders)}</span>.
+        real residual is <span class="${over ? "warn" : "ok"}">${pct(founders)}</span>
+        — napkin was too happy by <span class="warn">${pct(delta)}</span>.
       </p>
     `;
   }
@@ -247,8 +279,13 @@
   };
   document.getElementById("recalc").onclick = calc;
   document.getElementById("threshold").onchange = calc;
-  safesEl.addEventListener("change", calc);
-  safesEl.addEventListener("input", () => { /* live-ish */ });
+  document.querySelectorAll("[data-preset]").forEach((btn) => {
+    btn.onclick = () => {
+      safes = PRESETS[btn.getAttribute("data-preset")].map((s) => ({ ...s }));
+      renderInputs();
+      calc();
+    };
+  });
 
   renderInputs();
   calc();
